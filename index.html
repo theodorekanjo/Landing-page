@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OneWay AI | I build systems that do the work</title>
+<meta name="description" content="I help recruitment agencies recover $2,000+ per outreach campaign with AI systems. 30,000+ applicants processed, zero manual entry.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171C;
+    --ink-soft:#1C2027;
+    --paper:#F4F1EA;
+    --paper-dim:#E9E4D8;
+    --verde:#0E8C64;
+    --verde-bright:#17A673;
+    --verde-tint:#DDF0E7;
+    --brass:#B0862F;
+    --brass-bright:#D4A83E;
+    --mist:#6B7078;
+    --mist-light:#9BA0A8;
+    --line:#E0DACB;
+    --line-dark:#2A2E36;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'JetBrains Mono',monospace}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in-view{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.1s}
+  .reveal.d2{transition-delay:.2s}
+  .reveal.d3{transition-delay:.3s}
+
+  /* ---------- NAV ---------- */
+  .nav{padding:22px 0;border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:50}
+  .nav .wrap{display:flex;justify-content:space-between;align-items:center}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:19px;letter-spacing:-0.02em}
+  .brand-name span{color:var(--verde)}
+  .nav-cta{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;
+    background:var(--ink);color:var(--paper);padding:10px 20px;border-radius:4px;
+    text-decoration:none;transition:background .15s;
+  }
+  .nav-cta:hover{background:var(--verde)}
+
+  /* logo dot animation */
+  @keyframes pulse{
+    0%{opacity:.25;transform:scale(.82)}
+    45%{opacity:1;transform:scale(1.08)}
+    100%{opacity:.25;transform:scale(.82)}
+  }
+  .logo-dots circle{transform-box:fill-box;transform-origin:center}
+  .logo-dots .c1{animation:pulse 2.8s ease-in-out infinite;animation-delay:0s}
+  .logo-dots .c2{animation:pulse 2.8s ease-in-out infinite;animation-delay:.18s}
+  .logo-dots .c3{animation:pulse 2.8s ease-in-out infinite;animation-delay:.36s}
+  .logo-dots .c4{animation:pulse 2.8s ease-in-out infinite;animation-delay:.54s}
+  .logo-dots .c5{animation:pulse 2.8s ease-in-out infinite;animation-delay:.72s}
+  .logo-dots .c6{animation:pulse 2.8s ease-in-out infinite;animation-delay:.9s}
+
+  /* ---------- TRANSMUTATION CIRCLES ---------- */
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .tc{position:absolute;pointer-events:none}
+  .tc g{transform-box:fill-box;transform-origin:center}
+  .tc .spin-slow{animation:spin 110s linear infinite}
+  .tc .spin-rev{animation:spin 80s linear infinite reverse}
+  .hero-circle{
+    right:-180px;top:50%;transform:translateY(-50%);
+    width:620px;height:620px;opacity:.16;
+  }
+  .score-circle{
+    left:-220px;bottom:-200px;
+    width:560px;height:560px;opacity:.1;
+  }
+
+  /* section sigil: stroke draws itself in when scrolled into view */
+  .sigil{display:block}
+  .sigil .draw{
+    stroke-dasharray:1;stroke-dashoffset:1;
+    transition:stroke-dashoffset 1.4s ease .1s;
+  }
+  .in-view .sigil .draw{stroke-dashoffset:0}
+  .sigil .spin-g{transform-box:fill-box;transform-origin:center;animation:spin 40s linear infinite}
+
+  /* ---------- HERO ---------- */
+  .hero{background:var(--ink);color:var(--paper);padding:72px 0 80px;position:relative;overflow:hidden}
+  .hero-inner{position:relative;z-index:2}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--verde-bright);margin-bottom:26px;
+  }
+  .eyebrow::before{
+    content:'';width:7px;height:7px;border-radius:50%;
+    background:var(--verde-bright);box-shadow:0 0 0 4px rgba(23,166,115,.18);
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;
+    font-size:clamp(32px,5.4vw,54px);line-height:1.1;letter-spacing:-0.02em;
+    max-width:720px;
+  }
+  h1 em{font-style:normal;color:var(--verde-bright)}
+  .hero-sub{margin-top:20px;font-size:17px;color:var(--mist-light);max-width:560px}
+  .hero-sub b{color:var(--paper);font-weight:600}
+
+  /* hero load-in */
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  .hero .eyebrow{animation:rise .7s ease both}
+  .hero h1{animation:rise .7s ease .12s both}
+  .hero .hero-sub{animation:rise .7s ease .24s both}
+  .hero .hero-cta-row{animation:rise .7s ease .36s both}
+  .hero .video-shell{animation:rise .8s ease .45s both}
+
+  .hero-cta-row{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+  .video-shell{
+    margin-top:44px;border-radius:8px;overflow:hidden;
+    border:1px solid var(--line-dark);background:#000;
+    aspect-ratio:16/9;position:relative;max-width:860px;
+    box-shadow:0 0 60px rgba(23,166,115,.08);
+  }
+  .video-shell iframe{width:100%;height:100%;border:none;display:block}
+  .hero-hint{
+    margin-top:18px;font-size:13.5px;color:var(--mist-light);
+    display:flex;align-items:center;gap:8px;
+  }
+  .hero-hint .arrow{color:var(--verde-bright);font-size:16px;animation:nudge 2.2s ease-in-out infinite}
+  @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:76px 0}
+  .sec-marker{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .sec-marker svg{display:block}
+  .sec-label{
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--verde);font-weight:500;
+  }
+  h2{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;
+    font-size:clamp(26px,3.6vw,36px);letter-spacing:-0.01em;line-height:1.15;
+    max-width:640px;
+  }
+  .sec-sub{margin-top:14px;font-size:16px;color:var(--mist);max-width:580px}
+
+  /* ---------- SYSTEMS GALLERY ---------- */
+  .systems{margin-top:44px;border-top:1px solid var(--line)}
+  .sys-row{border-bottom:1px solid var(--line)}
+  .sys-head{
+    width:100%;background:none;border:none;cursor:pointer;
+    display:flex;align-items:center;gap:18px;
+    padding:24px 8px;text-align:left;font-family:inherit;
+    transition:background .15s;
+  }
+  .sys-head:hover{background:var(--paper-dim)}
+  .sys-head:focus-visible{outline:2px solid var(--verde);outline-offset:2px}
+  .sys-icon{width:38px;height:38px;flex-shrink:0}
+  .sys-icon .ring{
+    transform-box:fill-box;transform-origin:center;
+    transition:transform .5s ease;
+  }
+  .sys-head:hover .sys-icon .ring,
+  .sys-row.open .sys-icon .ring{transform:rotate(90deg)}
+  .sys-metric{
+    font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;
+    color:var(--verde);min-width:150px;flex-shrink:0;line-height:1.4;
+  }
+  .sys-name{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:19px;
+    color:var(--ink);flex:1;
+  }
+  .sys-toggle{
+    width:30px;height:30px;border-radius:50%;flex-shrink:0;
+    border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;
+    font-size:17px;line-height:1;color:var(--ink);transition:transform .2s,background .15s,color .15s;
+  }
+  .sys-row.open .sys-toggle{transform:rotate(45deg);background:var(--verde);border-color:var(--verde);color:#fff}
+  .sys-body{
+    max-height:0;overflow:hidden;transition:max-height .3s ease;
+  }
+  .sys-body-inner{
+    padding:6px 8px 30px 64px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;
+  }
+  .sys-col .mono{
+    display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--verde);margin-bottom:8px;font-weight:600;
+  }
+  .sys-col p{font-size:14.5px;color:var(--ink);line-height:1.6}
+  .sys-note{
+    padding:28px 8px;font-size:15px;color:var(--mist);
+  }
+  .sys-note b{color:var(--ink)}
+
+  /* ---------- SCORECARD ---------- */
+  .scorecard{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+  .scorecard .wrap{position:relative;z-index:2}
+  .scorecard .sec-label{color:var(--verde-bright)}
+  .scorecard .sec-sub{color:var(--mist-light)}
+  .scorecard h2 em{font-style:normal;color:var(--verde-bright)}
+  .scorecard-points{
+    margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--line-dark);border:1px solid var(--line-dark);border-radius:6px;overflow:hidden;
+  }
+  .sc-point{background:var(--ink-soft);padding:22px 20px}
+  .sc-point .mono{
+    display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--verde-bright);margin-bottom:8px;font-weight:600;
+  }
+  .sc-point p{font-size:14px;color:var(--mist-light)}
+
+  .score-cta-panel{
+    margin-top:36px;border:1px solid var(--line-dark);border-radius:8px;
+    background:var(--ink-soft);padding:36px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;
+  }
+  .score-cta-panel .panel-title{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:21px;line-height:1.3;
+  }
+  .score-cta-panel .panel-sub{margin-top:6px;font-size:14px;color:var(--mist-light);max-width:420px}
+  .exchange{
+    margin-top:20px;font-size:13px;color:var(--brass-bright);
+    font-family:'JetBrains Mono',monospace;letter-spacing:.04em;
+  }
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;
+    padding:14px 28px;border-radius:5px;text-decoration:none;
+    transition:transform .15s,background .15s,box-shadow .3s;display:inline-block;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn-solid{background:var(--verde);color:#fff}
+  .btn-solid:hover{background:var(--verde-bright)}
+  .btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+  .btn-ghost-light{border:1.5px solid var(--mist-light);color:var(--paper)}
+  .btn-ghost-light:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  @keyframes glow{
+    0%,100%{box-shadow:0 0 0 0 rgba(23,166,115,.0)}
+    50%{box-shadow:0 0 26px 2px rgba(23,166,115,.35)}
+  }
+  .btn-glow{animation:glow 3s ease-in-out infinite}
+
+  /* ---------- CLOSING ---------- */
+  .closing{text-align:left}
+  .closing h2{max-width:680px}
+  .closing .sec-sub{max-width:600px}
+  .cta-row{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:36px 0 56px}
+  .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .footer-proof{font-size:13.5px;color:var(--mist)}
+  .footer-proof b{color:var(--ink)}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:720px){
+    .sys-body-inner{grid-template-columns:1fr;padding-left:8px}
+    .scorecard-points{grid-template-columns:1fr}
+    .sys-metric{min-width:110px;font-size:11.5px}
+    .sys-name{font-size:16px}
+    .sys-icon{display:none}
+    .hero-circle{display:none}
+  }
+  :focus-visible{outline:2px solid var(--verde);outline-offset:3px}
+
+  /* ---------- REDUCED MOTION ---------- */
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    .reveal{opacity:1;transform:none}
+    .sigil .draw{stroke-dashoffset:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="OneWay AI home">
+      <svg class="logo-dots" viewBox="0 0 500 560" width="34" height="34" aria-hidden="true">
+        <g fill="#14171C">
+          <circle class="c1" cx="62" cy="248" r="8"/><circle class="c1" cx="62" cy="308" r="8"/>
+          <circle class="c2" cx="118" cy="210" r="11"/><circle class="c2" cx="118" cy="270" r="11"/><circle class="c2" cx="118" cy="330" r="11"/><circle class="c2" cx="118" cy="390" r="11"/>
+          <circle class="c3" cx="185" cy="172" r="15"/><circle class="c3" cx="185" cy="232" r="15"/><circle class="c3" cx="185" cy="292" r="15"/><circle class="c3" cx="185" cy="352" r="15"/><circle class="c3" cx="185" cy="412" r="15"/>
+          <circle class="c4" cx="258" cy="134" r="21"/><circle class="c4" cx="258" cy="210" r="21"/><circle class="c4" cx="258" cy="286" r="21"/><circle class="c4" cx="258" cy="362" r="21"/><circle class="c4" cx="258" cy="438" r="21"/>
+          <circle class="c5" cx="338" cy="172" r="30"/><circle class="c5" cx="338" cy="252" r="30"/><circle class="c5" cx="338" cy="332" r="30"/><circle class="c5" cx="338" cy="412" r="30"/>
+          <circle class="c6" cx="420" cy="212" r="38"/><circle class="c6" cx="420" cy="295" r="38"/><circle class="c6" cx="420" cy="378" r="38"/>
+        </g>
+      </svg>
+      <span class="brand-name">OneWay<span>AI</span></span>
+    </a>
+    <a class="nav-cta" href="https://forms.gle/jQqE1nf55TEkod1M9" target="_blank" rel="noopener">Get your AI readiness score</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <svg class="tc hero-circle" viewBox="0 0 500 500" style="color:#17A673" aria-hidden="true">
+    <g class="spin-slow" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="250" cy="250" r="240"/>
+      <circle cx="250" cy="250" r="204" stroke-dasharray="3 9"/>
+      <polygon points="250,70 94,340 406,340"/>
+      <polygon points="250,430 94,160 406,160"/>
+      <circle cx="250" cy="70" r="7"/><circle cx="94" cy="340" r="7"/><circle cx="406" cy="340" r="7"/>
+      <circle cx="250" cy="430" r="7"/><circle cx="94" cy="160" r="7"/><circle cx="406" cy="160" r="7"/>
+    </g>
+    <g class="spin-rev" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="250" cy="250" r="150"/>
+      <circle cx="250" cy="250" r="120" stroke-dasharray="1 7"/>
+      <rect x="166" y="166" width="168" height="168"/>
+      <circle cx="250" cy="250" r="58"/>
+      <circle cx="250" cy="250" r="6" fill="currentColor" stroke="none"/>
+    </g>
+  </svg>
+
+  <div class="wrap hero-inner">
+    <div class="eyebrow mono">AI systems that do the work</div>
+    <h1>I help recruitment agencies recover <em>$2,000+ per outreach campaign</em> with AI systems.</h1>
+    <p class="hero-sub"><b>30,000+ applicants processed. Zero manual entry.</b> Not theory. These systems are running right now. Watch the video, then find out in 5 minutes whether your business is ready for AI.</p>
+
+    <div class="hero-cta-row">
+      <a class="btn btn-solid btn-glow" href="https://forms.gle/jQqE1nf55TEkod1M9" target="_blank" rel="noopener">Am I ready for AI? Get my score</a>
+      <a class="btn btn-ghost-light" href="#systems">See the systems</a>
+    </div>
+
+    <div class="video-shell">
+      <iframe src="https://www.youtube.com/embed/jl-cyzVhQ5M" title="OneWay AI: systems that do the work" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <p class="hero-hint"><span class="arrow">&darr;</span> Watch the video, then scroll down and take the scorecard.</p>
+  </div>
+</header>
+
+<!-- ============ SYSTEMS ============ -->
+<section id="systems">
+  <div class="wrap">
+    <div class="sec-marker reveal">
+      <svg class="sigil" width="40" height="40" viewBox="0 0 40 40" style="color:#0E8C64" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="2">
+          <g class="spin-g">
+            <circle class="draw" pathLength="1" cx="20" cy="20" r="17"/>
+            <polygon class="draw" pathLength="1" points="20,6.5 8.3,26.8 31.7,26.8"/>
+            <polygon class="draw" pathLength="1" points="20,33.5 8.3,13.2 31.7,13.2"/>
+          </g>
+          <circle cx="20" cy="20" r="2.4" fill="currentColor" stroke="none"/>
+        </g>
+      </svg>
+      <span class="sec-label mono">Systems I've built</span>
+    </div>
+    <h2 class="reveal d1">Real systems. Real numbers. Click any one to see how it works.</h2>
+    <p class="sec-sub reveal d2">Everything below is running today, for a talent programme, for clients, or in my own business. Each one can be adopted as-is or customised to how your team works.</p>
+
+    <div class="systems">
+
+      <div class="sys-row reveal">
+        <button class="sys-head" aria-expanded="false">
+          <svg class="sys-icon" viewBox="0 0 40 40" fill="none" stroke="#0E8C64" stroke-width="1.6" aria-hidden="true">
+            <circle class="ring" cx="20" cy="20" r="17" stroke-dasharray="4 6"/>
+            <polygon points="20,10 11,25.5 29,25.5"/>
+            <line x1="14" y1="20.5" x2="26" y2="20.5"/>
+          </svg>
+          <span class="sys-metric">5 days &rarr; 10 min</span>
+          <span class="sys-name">Outreach Engine</span>
+          <span class="sys-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="sys-body">
+          <div class="sys-body-inner">
+            <div class="sys-col"><span class="mono">What it does</span>
+              <p>Builds and sends personalised outreach at volume: 150 to 200 tailored emails a day, each one referencing something real about the person receiving it. Built with n8n and Apollo.</p></div>
+            <div class="sys-col"><span class="mono">The transformation</span>
+              <p>Email build time went from 5 days to 10 minutes. Response rate: 10%, against an industry benchmark of 2 to 5%. That's $2,000+ in recruiter time recovered per campaign.</p></div>
+            <div class="sys-col"><span class="mono">For your business</span>
+              <p>If your team does any kind of outreach, to candidates, clients, or partners, this installs the same machine. Your lists, your voice, your targets.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sys-row reveal">
+        <button class="sys-head" aria-expanded="false">
+          <svg class="sys-icon" viewBox="0 0 40 40" fill="none" stroke="#0E8C64" stroke-width="1.6" aria-hidden="true">
+            <circle class="ring" cx="20" cy="20" r="17" stroke-dasharray="4 6"/>
+            <circle cx="20" cy="20" r="9"/>
+            <line x1="20" y1="7" x2="20" y2="13"/><line x1="20" y1="27" x2="20" y2="33"/>
+            <line x1="7" y1="20" x2="13" y2="20"/><line x1="27" y1="20" x2="33" y2="20"/>
+            <circle cx="20" cy="20" r="2.2" fill="#0E8C64" stroke="none"/>
+          </svg>
+          <span class="sys-metric">30,000+ applicants</span>
+          <span class="sys-name">Talent Match Engine</span>
+          <span class="sys-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="sys-body">
+          <div class="sys-body-inner">
+            <div class="sys-col"><span class="mono">What it does</span>
+              <p>Reads every application, scores it against what the role actually needs, skills and mindset, and hands your team a ranked shortlist with the reasoning attached. No black-box scores.</p></div>
+            <div class="sys-col"><span class="mono">The transformation</span>
+              <p>30,000+ applicants processed with zero manual data entry. A pile of 2,000 CVs becomes a shortlist of 5 your team can actually action, the same day applications close.</p></div>
+            <div class="sys-col"><span class="mono">For your business</span>
+              <p>If you receive more applications than your team can review, for jobs, programmes, or scholarships, this ends the backlog without adding headcount.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sys-row reveal">
+        <button class="sys-head" aria-expanded="false">
+          <svg class="sys-icon" viewBox="0 0 40 40" fill="none" stroke="#0E8C64" stroke-width="1.6" aria-hidden="true">
+            <circle class="ring" cx="20" cy="20" r="17" stroke-dasharray="4 6"/>
+            <circle cx="20" cy="20" r="7"/>
+            <line x1="20" y1="8" x2="20" y2="11"/><line x1="20" y1="29" x2="20" y2="32"/>
+            <line x1="8" y1="20" x2="11" y2="20"/><line x1="29" y1="20" x2="32" y2="20"/>
+            <line x1="11.5" y1="11.5" x2="13.6" y2="13.6"/><line x1="26.4" y1="26.4" x2="28.5" y2="28.5"/>
+            <line x1="28.5" y1="11.5" x2="26.4" y2="13.6"/><line x1="13.6" y1="26.4" x2="11.5" y2="28.5"/>
+          </svg>
+          <span class="sys-metric">Every call, briefed</span>
+          <span class="sys-name">Meeting Briefer</span>
+          <span class="sys-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="sys-body">
+          <div class="sys-body-inner">
+            <div class="sys-col"><span class="mono">What it does</span>
+              <p>Checks my calendar every morning, researches every person and company I'm meeting that day, pulls context from past emails, and drops a short brief in my inbox before each call.</p></div>
+            <div class="sys-col"><span class="mono">The transformation</span>
+              <p>A 5-minute read replaces 30 minutes of scrambled googling, or worse, walking in cold. I open every call already knowing something real about the person across the table.</p></div>
+            <div class="sys-col"><span class="mono">For your business</span>
+              <p>If your team runs back-to-back client or candidate calls, this gives every person on your team a researcher who works while they sleep.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sys-row reveal">
+        <button class="sys-head" aria-expanded="false">
+          <svg class="sys-icon" viewBox="0 0 40 40" fill="none" stroke="#0E8C64" stroke-width="1.6" aria-hidden="true">
+            <circle class="ring" cx="20" cy="20" r="17" stroke-dasharray="4 6"/>
+            <line x1="13" y1="16" x2="13" y2="24" stroke-linecap="round"/>
+            <line x1="17.5" y1="12" x2="17.5" y2="28" stroke-linecap="round"/>
+            <line x1="22.5" y1="15" x2="22.5" y2="25" stroke-linecap="round"/>
+            <line x1="27" y1="17.5" x2="27" y2="22.5" stroke-linecap="round"/>
+          </svg>
+          <span class="sys-metric">Instant response</span>
+          <span class="sys-name">Voice AI Lead Qualifier</span>
+          <span class="sys-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="sys-body">
+          <div class="sys-body-inner">
+            <div class="sys-col"><span class="mono">What it does</span>
+              <p>The moment someone submits a form, an AI voice agent calls them, asks the right qualifying questions, scores the lead, and routes it into the CRM. Automatically.</p></div>
+            <div class="sys-col"><span class="mono">The transformation</span>
+              <p>Speed-to-lead goes from hours (or days) to seconds. No lead sits in an inbox going cold, and no human touches it until the lead is worth their time.</p></div>
+            <div class="sys-col"><span class="mono">For your business</span>
+              <p>If leads come in faster than your team can respond, or come in overnight, this makes sure every single one gets an instant, professional first touch.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sys-row reveal">
+        <button class="sys-head" aria-expanded="false">
+          <svg class="sys-icon" viewBox="0 0 40 40" fill="none" stroke="#0E8C64" stroke-width="1.6" aria-hidden="true">
+            <circle class="ring" cx="20" cy="20" r="17" stroke-dasharray="4 6"/>
+            <line x1="12" y1="16" x2="28" y2="16"/><polyline points="24.5,12.5 28,16 24.5,19.5"/>
+            <line x1="28" y1="24" x2="12" y2="24"/><polyline points="15.5,20.5 12,24 15.5,27.5"/>
+          </svg>
+          <span class="sys-metric">Hours &rarr; dollars</span>
+          <span class="sys-name">AI Readiness Scorecard</span>
+          <span class="sys-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="sys-body">
+          <div class="sys-body-inner">
+            <div class="sys-col"><span class="mono">What it does</span>
+              <p>A 15-question audit that finds where your team is losing time, then converts those hours into a dollar figure. Automatically scored, automatically emailed back to you.</p></div>
+            <div class="sys-col"><span class="mono">The transformation</span>
+              <p>Five minutes of honest answers becomes a personalised read: hours reclaimable per week, and what that's worth per year. It's the system running on this very page.</p></div>
+            <div class="sys-col"><span class="mono">For your business</span>
+              <p>Want to know if you're ready for AI? <a href="https://forms.gle/jQqE1nf55TEkod1M9" target="_blank" rel="noopener" style="color:var(--verde);font-weight:600">Take the scorecard</a>, it's free. And if you want your own scored lead magnet like this one, I build those too.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="sys-note reveal"><b>These five aren't the menu. They're the proof.</b> Every business has its own version of manual work that shouldn't exist. Tell me yours and I'll build the system for it.</p>
+  </div>
+</section>
+
+<!-- ============ SCORECARD ============ -->
+<section class="scorecard" id="scorecard">
+  <svg class="tc score-circle" viewBox="0 0 500 500" style="color:#17A673" aria-hidden="true">
+    <g class="spin-slow" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="250" cy="250" r="240"/>
+      <circle cx="250" cy="250" r="204" stroke-dasharray="3 9"/>
+      <polygon points="250,70 94,340 406,340"/>
+      <polygon points="250,430 94,160 406,160"/>
+      <circle cx="250" cy="70" r="7"/><circle cx="94" cy="340" r="7"/><circle cx="406" cy="340" r="7"/>
+      <circle cx="250" cy="430" r="7"/><circle cx="94" cy="160" r="7"/><circle cx="406" cy="160" r="7"/>
+    </g>
+    <g class="spin-rev" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="250" cy="250" r="150"/>
+      <circle cx="250" cy="250" r="120" stroke-dasharray="1 7"/>
+      <rect x="166" y="166" width="168" height="168"/>
+      <circle cx="250" cy="250" r="58"/>
+      <circle cx="250" cy="250" r="6" fill="currentColor" stroke="none"/>
+    </g>
+  </svg>
+
+  <div class="wrap">
+    <div class="sec-marker reveal">
+      <svg class="sigil" width="40" height="40" viewBox="0 0 40 40" style="color:#17A673" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="2">
+          <g class="spin-g">
+            <circle class="draw" pathLength="1" cx="20" cy="20" r="17"/>
+            <polygon class="draw" pathLength="1" points="20,6.5 8.3,26.8 31.7,26.8"/>
+            <polygon class="draw" pathLength="1" points="20,33.5 8.3,13.2 31.7,13.2"/>
+          </g>
+          <circle cx="20" cy="20" r="2.4" fill="currentColor" stroke="none"/>
+        </g>
+      </svg>
+      <span class="sec-label mono">Your turn: 5 minutes</span>
+    </div>
+    <h2 class="reveal d1">Is your business ready for AI? <em>Find out in 5 minutes.</em></h2>
+    <p class="sec-sub reveal d2">15 yes/no questions, two quick numbers, and your personalised score lands in your inbox within a couple of minutes. Every "yes" isn't a failure. It's money on the table.</p>
+
+    <div class="scorecard-points reveal d2">
+      <div class="sc-point"><span class="mono">01 &middot; Answer</span><p>15 quick yes/no questions about how your team actually works. No jargon, no trick questions.</p></div>
+      <div class="sc-point"><span class="mono">02 &middot; Get scored</span><p>Your tier, your reclaimable hours per week, and the annual dollar value. Calculated automatically.</p></div>
+      <div class="sc-point"><span class="mono">03 &middot; Decide</span><p>The read is yours regardless. If something stands out, book 30 minutes and we'll talk it through.</p></div>
+    </div>
+
+    <div class="score-cta-panel reveal d3">
+      <div>
+        <div class="panel-title">Think you're ready for AI? Put a number on it.</div>
+        <p class="panel-sub">Five minutes of honest answers gets you a personalised readiness score, your reclaimable hours, and what they're worth per year.</p>
+        <p class="exchange">Equivalent exchange: 5 minutes in, a full read on your business out.</p>
+      </div>
+      <a class="btn btn-solid btn-glow" href="https://forms.gle/jQqE1nf55TEkod1M9" target="_blank" rel="noopener">Take the AI readiness scorecard</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSING ============ -->
+<section class="closing">
+  <div class="wrap">
+    <div class="sec-marker reveal">
+      <svg class="sigil" width="40" height="40" viewBox="0 0 40 40" style="color:#0E8C64" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="2">
+          <g class="spin-g">
+            <circle class="draw" pathLength="1" cx="20" cy="20" r="17"/>
+            <polygon class="draw" pathLength="1" points="20,6.5 8.3,26.8 31.7,26.8"/>
+            <polygon class="draw" pathLength="1" points="20,33.5 8.3,13.2 31.7,13.2"/>
+          </g>
+          <circle cx="20" cy="20" r="2.4" fill="currentColor" stroke="none"/>
+        </g>
+      </svg>
+      <span class="sec-label mono">What happens next</span>
+    </div>
+    <h2 class="reveal d1">I've built this for a talent programme, for clients, and for my own business. I can build it for yours.</h2>
+    <p class="sec-sub reveal d2">Wondering if you're ready for AI? Take the scorecard and get your answer, or skip straight to a conversation. Either way, you'll leave knowing exactly where your hours are going and what they're worth. If there's nothing worth building, I'll tell you that too.</p>
+    <div class="cta-row reveal d3">
+      <a class="btn btn-solid" href="https://forms.gle/jQqE1nf55TEkod1M9" target="_blank" rel="noopener">Get my AI readiness score</a>
+      <a class="btn btn-ghost" href="https://calendly.com/theodorekanjo/30min" target="_blank" rel="noopener">Book 30 minutes with me</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap footer-row">
+    <div class="footer-proof">Built by <b>Theodore Kanjo</b>. Systems processing <b>30,000+ applications</b> with zero manual entry.</div>
+    <div class="mono" style="font-size:12px;color:var(--mist)">theodorekanjo@gmail.com</div>
+  </div>
+</footer>
+
+<script>
+  // Accordion: one open at a time, accessible
+  document.querySelectorAll('.sys-head').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var row = btn.closest('.sys-row');
+      var body = row.querySelector('.sys-body');
+      var isOpen = row.classList.contains('open');
+
+      // close all
+      document.querySelectorAll('.sys-row.open').forEach(function(r){
+        r.classList.remove('open');
+        r.querySelector('.sys-body').style.maxHeight = null;
+        r.querySelector('.sys-head').setAttribute('aria-expanded','false');
+      });
+
+      if(!isOpen){
+        row.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+
+  // Scroll reveal
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        }
+      });
+    },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in-view')});
+  }
+</script>
+
+</body>
+</html>
